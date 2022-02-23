@@ -11,7 +11,7 @@ import java.util.List;
 public class StudentController {
 
     @Autowired
-    private StudentService studentService; 
+    private StudentService studentService;
 
     @GetMapping
     public List<Students> getStudents(){
