@@ -1,5 +1,6 @@
-package com.example.student_managment.Courses;
+package com.example.student.management.persistence.repository;
 
+import com.example.student.management.persistence.entity.Courses;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

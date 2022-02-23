@@ -1,8 +1,5 @@
-package com.example.student_managment.Student;
+package com.example.student.management.persistence.entity;
 
-
-import com.example.student_managment.Courses.Courses;
-import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -26,7 +23,6 @@ public class Students {
     )
     private long id;
 
-    @JsonIgnore
     @ManyToMany(mappedBy = "enrolledStudents")
     private Set<Courses> subjects = new HashSet<>();
     private String name;
@@ -90,5 +86,12 @@ public class Students {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    public Set<Courses> getSubjects() {
+        return subjects;
+    }
+    public void setSubjects(Set<Courses> subjects) {
+        this.subjects = subjects;
     }
 }

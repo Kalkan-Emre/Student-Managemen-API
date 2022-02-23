@@ -1,28 +1,43 @@
-package com.example.student_managment.Courses;
+package com.example.student.management.service;
 
-import com.example.student_managment.Student.StudentRepo;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.student.management.dto.CoursesDTO;
+import com.example.student.management.mapper.CourseMapper;
+import com.example.student.management.persistence.entity.Courses;
+import com.example.student.management.persistence.repository.CoursesRepository;
+import com.example.student.management.persistence.repository.StudentRepo;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class CoursesService {
-    @Autowired
-    private CoursesRepository coursesRepository;
-    @Autowired
-    private StudentRepo studentRepository;
 
-    public List<Courses> getCourses() {
-        return coursesRepository.findAll();
+    private final CoursesRepository coursesRepository;
+    private final StudentRepo studentRepository;
+    private final CourseMapper courseMapper;
+
+    public CoursesService(CoursesRepository coursesRepository, StudentRepo studentRepository, CourseMapper courseMapper) {
+        this.coursesRepository = coursesRepository;
+        this.studentRepository = studentRepository;
+        this.courseMapper = courseMapper;
+    }
+
+    public List<CoursesDTO> getCourses() {
+        var courseList = coursesRepository.findAll();
+        var courseDtoList = new ArrayList<CoursesDTO>();
+        for(var course: courseList){
+            courseDtoList.add(courseMapper.mapEntityToDto(course));
+        }
+        return courseDtoList;
     }
 
     public void saveCourse(Courses course) {
         coursesRepository.save(course);
     }
 
-    public void deleteCourse(Long id) {
+    public void deleteCourse(Long id) {  //TODO implement by using DTO
         System.out.println(id);
         boolean exists = coursesRepository.existsById(id);
         System.out.println(id);
@@ -32,18 +47,18 @@ public class CoursesService {
         else{
             coursesRepository.deleteById(id);
         }
-
     }
 
     public long getCount() {
-        return coursesRepository.count();
+        var courseList = coursesRepository.findAll();
+        return courseList.size();
     }
 
     @Transactional
-    public void update(long id, String name, Integer capacity, String instructor) {
+    public void update(long id, String name, Integer capacity, String instructor) { //TODO implement by using DTO
         if(coursesRepository.existsById(id)){
             Courses current = coursesRepository.getById(id);
-            if(coursesRepository.findCoursesByName(name).isPresent()){
+            if(coursesRepository.findCoursesByName(name).isEmpty()){
                 if(!name.equals(current.getName()) &&!name.equals("")){
                     coursesRepository.getById(id).setName(name);
                 }
@@ -55,7 +70,7 @@ public class CoursesService {
                 coursesRepository.getById(id).setCapacity(capacity);
             }
             if(instructor!=null){
-                coursesRepository.getById(id).setInstructor(instructor);
+                coursesRepository.getById(id).setTeacher(instructor);
             }
         }
         else{
@@ -64,7 +79,7 @@ public class CoursesService {
     }
 
     @Transactional
-    public void enrollStudent(Long courseId, Long studentId) {
+    public void enrollStudent(Long courseId, Long studentId) { //TODO implement by using DTO
         if (coursesRepository.findById(courseId).isPresent())
         {
             if(studentRepository.findById(studentId).isPresent()){

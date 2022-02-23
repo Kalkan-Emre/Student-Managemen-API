@@ -1,7 +1,9 @@
 
-package com.example.student_managment.Student;
+package com.example.student.management;
 
-import com.example.student_managment.Courses.CoursesRepository;
+import com.example.student.management.persistence.entity.Students;
+import com.example.student.management.persistence.repository.CoursesRepository;
+import com.example.student.management.persistence.repository.StudentRepo;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +14,7 @@ import java.util.List;
 import static java.time.Month.*;
 
 @Configuration
-public class StudentConfig {
+public class CommandLineRunnerConfig {
     @Bean
     CommandLineRunner commandLineRunner(StudentRepo studentRepository, CoursesRepository coursesRepository){
         return args -> {

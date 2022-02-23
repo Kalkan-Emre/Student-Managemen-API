@@ -1,6 +1,4 @@
-package com.example.student_managment.Courses;
-
-import com.example.student_managment.Student.Students;
+package com.example.student.management.persistence.entity;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -30,19 +28,19 @@ public class Courses {
     private Set<Students> enrolledStudents = new HashSet<>();
     private String name;
     private Integer capacity;
-    private String instructor;
+    private String teacher;
 
-    public Courses(String name, Integer capacity, String instructor) {
+    public Courses(String name, Integer capacity, String teacher) {
         this.name = name;
         this.capacity = capacity;
-        this.instructor = instructor;
+        this.teacher = teacher;
     }
 
-    public Courses(Long id, String name, Integer capacity, String instructor) {
+    public Courses(Long id, String name, Integer capacity, String teacher) {
         this.id = id;
         this.name = name;
         this.capacity = capacity;
-        this.instructor = instructor;
+        this.teacher = teacher;
     }
 
     public Courses() {
@@ -72,12 +70,12 @@ public class Courses {
         this.capacity = capacity;
     }
 
-    public String getInstructor() {
-        return instructor;
+    public String getTeacher() {
+        return teacher;
     }
 
-    public void setInstructor(String instructor) {
-        this.instructor = instructor;
+    public void setTeacher(String instructor) {
+        this.teacher = instructor;
     }
 
     public Set<Students> getEnrolledStudents() {

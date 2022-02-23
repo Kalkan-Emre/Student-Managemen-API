@@ -1,5 +1,7 @@
-package com.example.student_managment.Student;
+package com.example.student.management.resource;
 
+import com.example.student.management.dto.StudentsDTO;
+import com.example.student.management.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +16,7 @@ public class StudentController {
     private StudentService studentService;
 
     @GetMapping
-    public List<Students> getStudents(){
+    public List<StudentsDTO> getStudents(){
         return studentService.getStudents();
     }
 
@@ -24,7 +26,7 @@ public class StudentController {
     }
 
     @PostMapping(path = "/add")
-    public void add(@RequestBody Students studentToBeAdd){
+    public void add(@RequestBody StudentsDTO studentToBeAdd){
         studentService.add(studentToBeAdd);
     }
 

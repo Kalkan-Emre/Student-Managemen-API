@@ -1,5 +1,8 @@
-package com.example.student_managment.Courses;
+package com.example.student.management.resource;
 
+import com.example.student.management.service.CoursesService;
+import com.example.student.management.dto.CoursesDTO;
+import com.example.student.management.persistence.entity.Courses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +15,7 @@ public class CourseController {
     private CoursesService coursesService;
 
     @GetMapping
-    public List<Courses> getCourses(){
+    public List<CoursesDTO> getCourses(){
         return coursesService.getCourses();
     }
     @GetMapping(path = "/count")
