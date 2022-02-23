@@ -16,7 +16,7 @@ import static java.time.Month.*;
 @Configuration
 public class CommandLineRunnerConfig {
     @Bean
-    CommandLineRunner commandLineRunner(StudentRepo studentRepository, CoursesRepository coursesRepository){
+    CommandLineRunner commandLineRunner(StudentRepo studentRepository){
         return args -> {
             Students emre = new Students(
                     "emre",

@@ -60,7 +60,7 @@ public class StudentService {
     @Transactional
     public void update(long id, String name, String email) { //TODO implement by using DTO
         boolean isEmailTaken = studentRepository.findStudentClassByEmail(email).isPresent();
-        if (!studentRepository.findById(id).isPresent()) {
+        if (studentRepository.findById(id).isEmpty()) {
             throw new IllegalStateException("Student with id "+id+" not found");
         }
         if(name!=null && name.length()>0 && !name.equals(studentRepository.getById(id).getName())){
