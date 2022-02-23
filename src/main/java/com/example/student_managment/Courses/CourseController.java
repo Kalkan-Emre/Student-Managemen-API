@@ -8,7 +8,6 @@ import java.util.List;
 @org.springframework.web.bind.annotation.RestController //@RestController neden çalışmıyor?
 @RequestMapping(path="api/courses")
 public class CourseController {
-
     @Autowired
     private CoursesService coursesService;
 
