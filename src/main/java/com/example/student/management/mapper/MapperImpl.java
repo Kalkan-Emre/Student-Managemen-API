@@ -12,11 +12,21 @@ public class MapperImpl implements Mapper{
     public CoursesDTO mapEntityToDto(Course course){
         var coursesDTO = new CoursesDTO();
         coursesDTO.setCapacity(course.getCapacity());
-        coursesDTO.setInstructor(course.getTeacher());
+        coursesDTO.setTeacher(course.getTeacher());
         coursesDTO.setName(course.getName());
         course.getEnrolledStudents().forEach(coursesDTO::addEnrolledStudent);
         coursesDTO.setId(course.getId());
         return coursesDTO;
+    }
+
+    @Override
+    public Course mapDtoToEntity(CoursesDTO coursesDTO){
+        var course = new Course();
+        course.setCapacity(coursesDTO.getCapacity());
+        course.setTeacher(coursesDTO.getTeacher());
+        course.setName(coursesDTO.getName());
+        course.setId(coursesDTO.getId());
+        return course;
     }
 
     @Override
@@ -39,5 +49,4 @@ public class MapperImpl implements Mapper{
         return student;
     }
 
-    //TODO: Implement  mapDtoToEntity method
 }

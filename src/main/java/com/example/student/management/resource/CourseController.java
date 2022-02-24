@@ -1,6 +1,5 @@
 package com.example.student.management.resource;
 
-import com.example.student.management.persistence.entity.Course;
 import com.example.student.management.service.CoursesService;
 import com.example.student.management.dto.CoursesDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +20,11 @@ public class CourseController {
     @GetMapping(path = "/count")
     public long getCount(){return coursesService.getCount();}
     @PostMapping
-    public  void saveCourse(@RequestBody Course course) {
-        coursesService.saveCourse(course);
+    public  void saveCourse(@RequestBody CoursesDTO courseDto) {
+        coursesService.saveCourse(courseDto);
     }
     @DeleteMapping(path = "/delete/{id}")
     public void deleteCourse(@PathVariable String id){
-        System.out.println(id);
         coursesService.deleteCourse(Long.parseLong(id));
     }
     @PutMapping(path = "/update/{id}")

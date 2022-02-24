@@ -9,15 +9,21 @@ import java.util.Set;
 public class CoursesDTO {
     private String name;
     private Integer capacity;
-    private String Instructor;
+    private String teacher;
     private Set<Long> enrolledStudents = new HashSet<>();
     private Long id;
 
     public CoursesDTO(String name, Integer capacity, String instructor, Set<Long> enrolledStudents) {
         this.name = name;
         this.capacity = capacity;
-        Instructor = instructor;
+        teacher = instructor;
         this.enrolledStudents = enrolledStudents;
+    }
+
+    public CoursesDTO(String name, Integer capacity, String teacher) {
+        this.name = name;
+        this.capacity = capacity;
+        this.teacher = teacher;
     }
 
     public CoursesDTO() {
@@ -39,12 +45,12 @@ public class CoursesDTO {
         this.capacity = capacity;
     }
 
-    public String getInstructor() {
-        return Instructor;
+    public String getTeacher() {
+        return teacher;
     }
 
-    public void setInstructor(String instructor) {
-        Instructor = instructor;
+    public void setTeacher(String instructor) {
+        teacher = instructor;
     }
 
     public Set<Long> getEnrolledStudents() {

@@ -41,7 +41,7 @@ public class StudentService {
             studentRepository.save(mapper.mapDtoToEntity(studentDTO));
         }
     }
-    public void delete(Long idOfStudentToBeDelete){ //TODO implement by using DTO
+    public void delete(Long idOfStudentToBeDelete){
         boolean exists = studentRepository.existsById(idOfStudentToBeDelete);
         if(!exists){
             throw new IllegalStateException("Student with id "+idOfStudentToBeDelete+"does not exists");
@@ -52,7 +52,7 @@ public class StudentService {
     }
 
     @Transactional
-    public void update(long id, String name, String email) { //TODO implement by using DTO
+    public void update(long id, String name, String email) {
         boolean isEmailTaken = studentRepository.findStudentClassByEmail(email).isPresent();
         if (studentRepository.findById(id).isEmpty()) {
             throw new IllegalStateException("Student with id "+id+" not found");

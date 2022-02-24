@@ -8,7 +8,6 @@ import com.example.student.management.persistence.repository.StudentRepo;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,14 +28,13 @@ public class CoursesService {
         return coursesRepository.findAll().stream().map(mapper::mapEntityToDto).collect(Collectors.toList());
     }
 
-    public void saveCourse(Course course) {
-        coursesRepository.save(course);
+    public void saveCourse(CoursesDTO courseDto) {
+        coursesRepository.save(mapper.mapDtoToEntity(courseDto));
     }
 
-    public void deleteCourse(Long id) {  //TODO implement by using DTO
+    public void deleteCourse(Long id) {
         System.out.println(id);
         boolean exists = coursesRepository.existsById(id);
-        System.out.println(id);
         if(!exists){
             throw new IllegalStateException("Student with id " +id +" does not exists");
         }
@@ -51,7 +49,7 @@ public class CoursesService {
     }
 
     @Transactional
-    public void update(long id, String name, Integer capacity, String teacher) { //TODO implement by using DTO
+    public void update(long id, String name, Integer capacity, String teacher) {
         if(coursesRepository.existsById(id)){
             Course current = coursesRepository.getById(id);
             if(coursesRepository.findCoursesByName(name).isEmpty()){
@@ -75,7 +73,7 @@ public class CoursesService {
     }
 
     @Transactional
-    public void enrollStudent(Long courseId, Long studentId) { //TODO implement by using DTO
+    public void enrollStudent(Long courseId, Long studentId) {
         if (coursesRepository.findById(courseId).isPresent())
         {
             if(studentRepository.findById(studentId).isPresent()){
