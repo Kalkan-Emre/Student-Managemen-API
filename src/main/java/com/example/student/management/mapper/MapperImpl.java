@@ -4,12 +4,13 @@ import com.example.student.management.dto.CoursesDTO;
 import com.example.student.management.dto.StudentsDTO;
 import com.example.student.management.persistence.entity.Course;
 import com.example.student.management.persistence.entity.Student;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
 @Component
 public class MapperImpl implements Mapper{
     @Override
-    public CoursesDTO mapEntityToDto(Course course){
+    public CoursesDTO mapEntityToDto(@NotNull Course course){
         var coursesDTO = new CoursesDTO();
         coursesDTO.setCapacity(course.getCapacity());
         coursesDTO.setTeacher(course.getTeacher());
@@ -20,7 +21,7 @@ public class MapperImpl implements Mapper{
     }
 
     @Override
-    public Course mapDtoToEntity(CoursesDTO coursesDTO){
+    public Course mapDtoToEntity(@NotNull CoursesDTO coursesDTO){
         var course = new Course();
         course.setCapacity(coursesDTO.getCapacity());
         course.setTeacher(coursesDTO.getTeacher());
@@ -30,7 +31,7 @@ public class MapperImpl implements Mapper{
     }
 
     @Override
-    public StudentsDTO mapEntityToDto(Student student){
+    public StudentsDTO mapEntityToDto(@NotNull Student student){
         var studentDto = new StudentsDTO();
         studentDto.setEmail(student.getEmail());
         studentDto.setDob(student.getDob());
@@ -41,7 +42,7 @@ public class MapperImpl implements Mapper{
     }
 
     @Override
-    public Student mapDtoToEntity(StudentsDTO studentDto){
+    public Student mapDtoToEntity(@NotNull StudentsDTO studentDto){
         var student = new Student();
         student.setName(studentDto.getName());
         student.setEmail(studentDto.getEmail());

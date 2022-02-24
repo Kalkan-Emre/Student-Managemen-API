@@ -2,10 +2,17 @@ package com.example.student.management.dto;
 
 
 import com.example.student.management.persistence.entity.Student;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
 import java.util.Set;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class CoursesDTO {
     private String name;
     private Integer capacity;
@@ -26,47 +33,7 @@ public class CoursesDTO {
         this.teacher = teacher;
     }
 
-    public CoursesDTO() {
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getCapacity() {
-        return capacity;
-    }
-
-    public void setCapacity(Integer capacity) {
-        this.capacity = capacity;
-    }
-
-    public String getTeacher() {
-        return teacher;
-    }
-
-    public void setTeacher(String instructor) {
-        teacher = instructor;
-    }
-
-    public Set<Long> getEnrolledStudents() {
-        return enrolledStudents;
-    }
-
-    public void addEnrolledStudent(Student student) {
+    public void addEnrolledStudent(@NotNull Student student) {
            this.enrolledStudents.add(student.getId());
     }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
 }

@@ -1,10 +1,14 @@
 package com.example.student.management.persistence.entity;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@NoArgsConstructor
 @Table
 public class Course {
     @Id
@@ -43,9 +47,6 @@ public class Course {
         this.teacher = teacher;
     }
 
-    public Course() {
-    }
-
     public Long getId() {
         return id;
     }
@@ -80,13 +81,5 @@ public class Course {
 
     public Set<Student> getEnrolledStudents() {
         return enrolledStudents;
-    }
-
-    public void addEnrolledStudent(Student enrolled) {
-        this.enrolledStudents.add(enrolled);
-    }
-
-    public void enrollStudent(Student student) {
-        enrolledStudents.add(student);
     }
 }

@@ -1,6 +1,8 @@
 package com.example.student.management.persistence.entity;
 
 
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.Period;
@@ -9,6 +11,7 @@ import java.util.Set;
 
 
 @Entity
+@NoArgsConstructor
 @Table
 public class Student {
     @Id
@@ -30,9 +33,6 @@ public class Student {
     private LocalDate dob;
     @Transient
     private Integer age;
-
-    public Student() {
-    }
 
     public Student(String name, String email, LocalDate dob) {
         this.name = name;

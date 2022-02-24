@@ -77,7 +77,7 @@ public class CoursesService {
         if (coursesRepository.findById(courseId).isPresent())
         {
             if(studentRepository.findById(studentId).isPresent()){
-                coursesRepository.findById(courseId).get().enrollStudent(studentRepository.findById(studentId).get());
+                coursesRepository.findById(courseId).get().getEnrolledStudents().add(studentRepository.findById(studentId).get());
             }
             else{
                 throw new IllegalStateException("Student with id "+studentId+" is not present");
