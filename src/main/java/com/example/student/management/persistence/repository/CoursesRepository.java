@@ -1,13 +1,13 @@
 package com.example.student.management.persistence.repository;
 
-import com.example.student.management.persistence.entity.Courses;
+import com.example.student.management.persistence.entity.Course;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface CoursesRepository extends JpaRepository<Courses, Long> {
+public interface CoursesRepository extends JpaRepository<Course, Long> {
 
-    Optional<Courses> findCoursesByName(String name);
+    Optional<Course> findCoursesByName(String name);
 }

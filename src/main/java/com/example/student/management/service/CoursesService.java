@@ -1,8 +1,8 @@
 package com.example.student.management.service;
 
 import com.example.student.management.dto.CoursesDTO;
-import com.example.student.management.mapper.CourseMapper;
-import com.example.student.management.persistence.entity.Courses;
+import com.example.student.management.mapper.Mapper;
+import com.example.student.management.persistence.entity.Course;
 import com.example.student.management.persistence.repository.CoursesRepository;
 import com.example.student.management.persistence.repository.StudentRepo;
 import org.springframework.stereotype.Service;
@@ -10,30 +10,26 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CoursesService {
 
     private final CoursesRepository coursesRepository;
     private final StudentRepo studentRepository;
-    private final CourseMapper courseMapper;
+    private final Mapper mapper;
 
-    public CoursesService(CoursesRepository coursesRepository, StudentRepo studentRepository, CourseMapper courseMapper) {
+    public CoursesService(CoursesRepository coursesRepository, StudentRepo studentRepository, Mapper mapper) {
         this.coursesRepository = coursesRepository;
         this.studentRepository = studentRepository;
-        this.courseMapper = courseMapper;
+        this.mapper = mapper;
     }
 
     public List<CoursesDTO> getCourses() {
-        var courseList = coursesRepository.findAll();
-        var courseDtoList = new ArrayList<CoursesDTO>();
-        for(var course: courseList){
-            courseDtoList.add(courseMapper.mapEntityToDto(course));
-        }
-        return courseDtoList;
+        return coursesRepository.findAll().stream().map(mapper::mapEntityToDto).collect(Collectors.toList());
     }
 
-    public void saveCourse(Courses course) {
+    public void saveCourse(Course course) {
         coursesRepository.save(course);
     }
 
@@ -55,9 +51,9 @@ public class CoursesService {
     }
 
     @Transactional
-    public void update(long id, String name, Integer capacity, String instructor) { //TODO implement by using DTO
+    public void update(long id, String name, Integer capacity, String teacher) { //TODO implement by using DTO
         if(coursesRepository.existsById(id)){
-            Courses current = coursesRepository.getById(id);
+            Course current = coursesRepository.getById(id);
             if(coursesRepository.findCoursesByName(name).isEmpty()){
                 if(!name.equals(current.getName()) &&!name.equals("")){
                     coursesRepository.getById(id).setName(name);
@@ -69,8 +65,8 @@ public class CoursesService {
             if(capacity!=null){
                 coursesRepository.getById(id).setCapacity(capacity);
             }
-            if(instructor!=null){
-                coursesRepository.getById(id).setTeacher(instructor);
+            if(teacher!=null){
+                coursesRepository.getById(id).setTeacher(teacher);
             }
         }
         else{

@@ -1,35 +1,29 @@
 package com.example.student.management.service;
 
 import com.example.student.management.dto.StudentsDTO;
-import com.example.student.management.mapper.StudentMapper;
-import com.example.student.management.persistence.entity.Students;
+import com.example.student.management.mapper.Mapper;
+import com.example.student.management.persistence.entity.Student;
 import com.example.student.management.persistence.repository.StudentRepo;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
 
     private final StudentRepo studentRepository;
-    private final StudentMapper studentMapper;
+    private final Mapper mapper;
 
-    public StudentService(StudentRepo studentRepository, StudentMapper studentMapper) {
+    public StudentService(StudentRepo studentRepository, Mapper mapper) {
         this.studentRepository = studentRepository;
-        this.studentMapper = studentMapper;
+        this.mapper = mapper;
     }
 
     public List<StudentsDTO> getStudents() {
-
-        var studentList = studentRepository.findAll();
-        var studentDtoList = new ArrayList<StudentsDTO>();
-        for(var student: studentList){
-            studentDtoList.add(studentMapper.mapEntityToDto(student));
-        }
-        return studentDtoList;
+        return studentRepository.findAll().stream().map(mapper::mapEntityToDto).collect(Collectors.toList());
     }
 
     public long getCount() {
@@ -38,13 +32,13 @@ public class StudentService {
     }
 
     public void add(StudentsDTO studentDTO) {
-        Optional<Students> studentOptional = studentRepository
+        Optional<Student> studentOptional = studentRepository
                 .findStudentClassByEmail(studentDTO.getEmail());
         if(studentOptional.isPresent()){
             throw new IllegalStateException("Email taken");
         }
         else{
-            studentRepository.save(studentMapper.mapDtoToEntity(studentDTO));
+            studentRepository.save(mapper.mapDtoToEntity(studentDTO));
         }
     }
     public void delete(Long idOfStudentToBeDelete){ //TODO implement by using DTO

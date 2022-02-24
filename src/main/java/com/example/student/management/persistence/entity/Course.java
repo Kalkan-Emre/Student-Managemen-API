@@ -6,7 +6,7 @@ import java.util.Set;
 
 @Entity
 @Table
-public class Courses {
+public class Course {
     @Id
     @SequenceGenerator(
             name = "student_sequence",
@@ -25,25 +25,25 @@ public class Courses {
             joinColumns = @JoinColumn(name = "course_id"),
             inverseJoinColumns = @JoinColumn(name = "student_id")
     )
-    private Set<Students> enrolledStudents = new HashSet<>();
+    private Set<Student> enrolledStudents = new HashSet<>();
     private String name;
     private Integer capacity;
     private String teacher;
 
-    public Courses(String name, Integer capacity, String teacher) {
+    public Course(String name, Integer capacity, String teacher) {
         this.name = name;
         this.capacity = capacity;
         this.teacher = teacher;
     }
 
-    public Courses(Long id, String name, Integer capacity, String teacher) {
+    public Course(Long id, String name, Integer capacity, String teacher) {
         this.id = id;
         this.name = name;
         this.capacity = capacity;
         this.teacher = teacher;
     }
 
-    public Courses() {
+    public Course() {
     }
 
     public Long getId() {
@@ -78,15 +78,15 @@ public class Courses {
         this.teacher = instructor;
     }
 
-    public Set<Students> getEnrolledStudents() {
+    public Set<Student> getEnrolledStudents() {
         return enrolledStudents;
     }
 
-    public void setEnrolledStudents(Set<Students> enrolled) {
-        this.enrolledStudents = enrolled;
+    public void addEnrolledStudent(Student enrolled) {
+        this.enrolledStudents.add(enrolled);
     }
 
-    public void enrollStudent(Students student) {
+    public void enrollStudent(Student student) {
         enrolledStudents.add(student);
     }
 }

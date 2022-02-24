@@ -10,7 +10,7 @@ import java.util.Set;
 
 @Entity
 @Table
-public class Students {
+public class Student {
     @Id
     @SequenceGenerator(
             name = "student_sequence",
@@ -24,23 +24,23 @@ public class Students {
     private long id;
 
     @ManyToMany(mappedBy = "enrolledStudents")
-    private Set<Courses> subjects = new HashSet<>();
+    private Set<Course> courses = new HashSet<>();
     private String name;
     private String email;
     private LocalDate dob;
     @Transient
     private Integer age;
 
-    public Students() {
+    public Student() {
     }
 
-    public Students(String name, String email, LocalDate dob) {
+    public Student(String name, String email, LocalDate dob) {
         this.name = name;
         this.email = email;
         this.dob = dob;
     }
 
-    public Students(long id, String name, String email, LocalDate dob) {
+    public Student(long id, String name, String email, LocalDate dob) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -88,10 +88,10 @@ public class Students {
         this.age = age;
     }
 
-    public Set<Courses> getSubjects() {
-        return subjects;
+    public Set<Course> getCourses() {
+        return courses;
     }
-    public void setSubjects(Set<Courses> subjects) {
-        this.subjects = subjects;
+    public void setCourses(Set<Course> subjects) {
+        this.courses = subjects;
     }
 }

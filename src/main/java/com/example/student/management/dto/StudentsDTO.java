@@ -1,6 +1,6 @@
 package com.example.student.management.dto;
 
-import com.example.student.management.persistence.entity.Courses;
+import com.example.student.management.persistence.entity.Course;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -13,9 +13,9 @@ public class StudentsDTO {
     private LocalDate dob;
     private Long id;
 
-    public StudentsDTO(String name, Set<String> subjects, String email, LocalDate dob) {
+    public StudentsDTO(String name, Set<String> courses, String email, LocalDate dob) {
         this.name = name;
-        this.courses = subjects;
+        this.courses = courses;
         this.email = email;
         this.dob = dob;
     }
@@ -41,10 +41,8 @@ public class StudentsDTO {
         return courses;
     }
 
-    public void setCourses(Set<Courses> courses) {
-        for(var course: courses){
-            this.courses.add(course.getName());
-        }
+    public void addCourses(Course course) {
+        this.courses.add(course.getName());
     }
 
     public String getEmail() {

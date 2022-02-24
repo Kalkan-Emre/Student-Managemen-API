@@ -1,8 +1,7 @@
 package com.example.student.management.dto;
 
 
-import com.example.student.management.persistence.entity.Courses;
-import com.example.student.management.persistence.entity.Students;
+import com.example.student.management.persistence.entity.Student;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -52,11 +51,8 @@ public class CoursesDTO {
         return enrolledStudents;
     }
 
-    public void setEnrolledStudents(Set<Students> enrolledStudents) {
-        for(var student: enrolledStudents){
-            this.enrolledStudents.add(student.getId());
-        }
-
+    public void addEnrolledStudent(Student student) {
+           this.enrolledStudents.add(student.getId());
     }
 
     public Long getId() {

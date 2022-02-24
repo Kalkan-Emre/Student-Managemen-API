@@ -1,8 +1,7 @@
 
 package com.example.student.management;
 
-import com.example.student.management.persistence.entity.Students;
-import com.example.student.management.persistence.repository.CoursesRepository;
+import com.example.student.management.persistence.entity.Student;
 import com.example.student.management.persistence.repository.StudentRepo;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -18,13 +17,13 @@ public class CommandLineRunnerConfig {
     @Bean
     CommandLineRunner commandLineRunner(StudentRepo studentRepository){
         return args -> {
-            Students emre = new Students(
+            Student emre = new Student(
                     "emre",
                     "emre@mail.com",
                     LocalDate.of(2001, OCTOBER, 11)
             );
 
-            Students goksu = new Students(
+            Student goksu = new Student(
                     "goksu",
                     "göksu@mail.com",
                     LocalDate.of(2006, APRIL, 18)

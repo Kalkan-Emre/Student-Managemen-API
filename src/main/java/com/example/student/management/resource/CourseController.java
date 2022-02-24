@@ -1,8 +1,8 @@
 package com.example.student.management.resource;
 
+import com.example.student.management.persistence.entity.Course;
 import com.example.student.management.service.CoursesService;
 import com.example.student.management.dto.CoursesDTO;
-import com.example.student.management.persistence.entity.Courses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +21,7 @@ public class CourseController {
     @GetMapping(path = "/count")
     public long getCount(){return coursesService.getCount();}
     @PostMapping
-    public  void saveCourse(@RequestBody Courses course) {
+    public  void saveCourse(@RequestBody Course course) {
         coursesService.saveCourse(course);
     }
     @DeleteMapping(path = "/delete/{id}")
@@ -33,8 +33,8 @@ public class CourseController {
     public void updateCourse(@PathVariable String id,
                              @RequestParam(required=false) String name,
                              @RequestParam(required = false) Integer capacity,
-                             @RequestParam(required = false) String instructor){
-        coursesService.update(Long.parseLong(id),name,capacity,instructor);
+                             @RequestParam(required = false) String teacher){
+        coursesService.update(Long.parseLong(id),name,capacity,teacher);
     }
     @PutMapping(path = "/enroll-student-to-course/course/{courseId}/student/{studentId}")
     public void enrollStudent(@PathVariable Long courseId, @PathVariable Long studentId){
