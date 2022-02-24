@@ -1,17 +1,15 @@
 package com.example.student.management.dto;
 
-import com.example.student.management.persistence.entity.Course;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
-@NoArgsConstructor
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 public class StudentsDTO {
     private String name;
@@ -31,9 +29,5 @@ public class StudentsDTO {
         this.name = name;
         this.email = email;
         this.dob = dob;
-    }
-
-    public void addCourses(@NotNull Course course) {
-        this.courses.add(course.getName());
     }
 }

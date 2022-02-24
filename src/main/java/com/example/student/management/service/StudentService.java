@@ -33,7 +33,7 @@ public class StudentService {
 
     public void add(StudentsDTO studentDTO) {
         Optional<Student> studentOptional = studentRepository
-                .findStudentClassByEmail(studentDTO.getEmail());
+                .findStudentByEmail(studentDTO.getEmail());
         if(studentOptional.isPresent()){
             throw new IllegalStateException("Email taken");
         }
@@ -53,7 +53,7 @@ public class StudentService {
 
     @Transactional
     public void update(long id, String name, String email) {
-        boolean isEmailTaken = studentRepository.findStudentClassByEmail(email).isPresent();
+        boolean isEmailTaken = studentRepository.findStudentByEmail(email).isPresent();
         if (studentRepository.findById(id).isEmpty()) {
             throw new IllegalStateException("Student with id "+id+" not found");
         }

@@ -7,6 +7,8 @@ import com.example.student.management.persistence.entity.Student;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
+import java.util.stream.Collectors;
+
 @Component
 public class MapperImpl implements Mapper{
     @Override
@@ -15,7 +17,8 @@ public class MapperImpl implements Mapper{
         coursesDTO.setCapacity(course.getCapacity());
         coursesDTO.setTeacher(course.getTeacher());
         coursesDTO.setName(course.getName());
-        course.getEnrolledStudents().forEach(coursesDTO::addEnrolledStudent);
+        coursesDTO.setEnrolledStudents(course.getEnrolledStudents().stream()
+                .map(student -> student.getId()).collect(Collectors.toSet()));
         coursesDTO.setId(course.getId());
         return coursesDTO;
     }
@@ -35,7 +38,8 @@ public class MapperImpl implements Mapper{
         var studentDto = new StudentsDTO();
         studentDto.setEmail(student.getEmail());
         studentDto.setDob(student.getDob());
-        student.getCourses().forEach(studentDto::addCourses);
+        studentDto.setCourses(student.getCourses().stream()
+                .map(course -> course.getName()).collect(Collectors.toSet()));
         studentDto.setName(student.getName());
         studentDto.setId(student.getId());
         return studentDto;
@@ -49,5 +53,4 @@ public class MapperImpl implements Mapper{
         student.setDob(studentDto.getDob());
         return student;
     }
-
 }

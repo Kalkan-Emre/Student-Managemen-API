@@ -1,11 +1,8 @@
 package com.example.student.management.dto;
 
-
-import com.example.student.management.persistence.entity.Student;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -31,9 +28,5 @@ public class CoursesDTO {
         this.name = name;
         this.capacity = capacity;
         this.teacher = teacher;
-    }
-
-    public void addEnrolledStudent(@NotNull Student student) {
-           this.enrolledStudents.add(student.getId());
     }
 }
