@@ -9,6 +9,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -83,8 +84,7 @@ public class StudentServiceImpl implements StudentService{
     @Override
     public List<Long> getNotEnrolledToAnyCourse() {
         return studentRepository.findAll().stream().filter(student -> !student.getCourses()
-                .stream().map(course -> course.getEnrolledStudents().stream()
-                        .collect(Collectors.toList()).contains(student)).collect(Collectors.toList())
-                .contains(true)).map(student1 -> student1.getId()).collect(Collectors.toList());
+                .stream().map(course -> new ArrayList<>(course.getEnrolledStudents()).contains(student)).collect(Collectors.toList())
+                .contains(true)).map(Student::getId).collect(Collectors.toList());
     }
 }

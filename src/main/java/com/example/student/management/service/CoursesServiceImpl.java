@@ -5,6 +5,8 @@ import com.example.student.management.mapper.Mapper;
 import com.example.student.management.persistence.entity.Course;
 import com.example.student.management.persistence.repository.CoursesRepository;
 import com.example.student.management.persistence.repository.StudentRepo;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -12,6 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@CacheConfig(cacheNames = "courses")
 public class CoursesServiceImpl implements CourseService{
 
     private final CoursesRepository coursesRepository;
@@ -26,6 +29,7 @@ public class CoursesServiceImpl implements CourseService{
     }
 
     @Override
+    @Cacheable("students")
     public List<CoursesDTO> getCourses() {
         return coursesRepository.findAll().stream().map(mapper::mapEntityToDto).collect(Collectors.toList());
     }
