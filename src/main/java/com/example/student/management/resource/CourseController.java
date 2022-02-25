@@ -1,6 +1,6 @@
 package com.example.student.management.resource;
 
-import com.example.student.management.service.CoursesService;
+import com.example.student.management.service.CoursesServiceImpl;
 import com.example.student.management.dto.CoursesDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +11,7 @@ import java.util.List;
 @RequestMapping(path="api/courses")
 public class CourseController {
     @Autowired
-    private CoursesService coursesService;
+    private CoursesServiceImpl coursesService;
 
     @GetMapping
     public List<CoursesDTO> getCourses(){

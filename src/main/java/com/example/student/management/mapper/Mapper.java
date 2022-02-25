@@ -8,7 +8,10 @@ import com.example.student.management.persistence.entity.Student;
 public interface Mapper {
 
     CoursesDTO mapEntityToDto(Course course);
+
     Course mapDtoToEntity(CoursesDTO coursesDto);
+
     StudentsDTO mapEntityToDto(Student student);
+
     Student mapDtoToEntity(StudentsDTO studentDto);
 }

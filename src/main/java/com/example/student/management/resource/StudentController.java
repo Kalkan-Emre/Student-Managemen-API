@@ -1,7 +1,7 @@
 package com.example.student.management.resource;
 
 import com.example.student.management.dto.StudentsDTO;
-import com.example.student.management.service.StudentService;
+import com.example.student.management.service.StudentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +13,7 @@ import java.util.List;
 public class StudentController {
 
     @Autowired
-    private StudentService studentService;
+    private StudentServiceImpl studentService;
 
     @GetMapping
     public List<StudentsDTO> getStudents(){
@@ -42,5 +42,9 @@ public class StudentController {
                               @RequestParam(required = false) String email) {
         long intId = Integer.parseInt((id));
         studentService.update(intId,name,email);
+    }
+    @GetMapping(path = "/not-enrolled")
+    public List<Long> getNotEnrolled(){
+        return studentService.getNotEnrolledToAnyCourse();
     }
 }

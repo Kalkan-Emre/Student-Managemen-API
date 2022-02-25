@@ -12,26 +12,30 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class CoursesService {
+public class CoursesServiceImpl implements CourseService{
 
     private final CoursesRepository coursesRepository;
     private final StudentRepo studentRepository;
     private final Mapper mapper;
 
-    public CoursesService(CoursesRepository coursesRepository, StudentRepo studentRepository, Mapper mapper) {
+
+    public CoursesServiceImpl(CoursesRepository coursesRepository, StudentRepo studentRepository, Mapper mapper) {
         this.coursesRepository = coursesRepository;
         this.studentRepository = studentRepository;
         this.mapper = mapper;
     }
 
+    @Override
     public List<CoursesDTO> getCourses() {
         return coursesRepository.findAll().stream().map(mapper::mapEntityToDto).collect(Collectors.toList());
     }
 
+    @Override
     public void saveCourse(CoursesDTO courseDto) {
         coursesRepository.save(mapper.mapDtoToEntity(courseDto));
     }
 
+    @Override
     public void deleteCourse(Long id) {
         System.out.println(id);
         boolean exists = coursesRepository.existsById(id);
@@ -43,11 +47,13 @@ public class CoursesService {
         }
     }
 
+    @Override
     public long getCount() {
         var courseList = coursesRepository.findAll();
         return courseList.size();
     }
 
+    @Override
     @Transactional
     public void update(long id, String name, Integer capacity, String teacher) {
         if(coursesRepository.existsById(id)){
@@ -72,6 +78,7 @@ public class CoursesService {
         }
     }
 
+    @Override
     @Transactional
     public void enrollStudent(Long courseId, Long studentId) {
         if (coursesRepository.findById(courseId).isPresent())
