@@ -1,8 +1,9 @@
 package com.example.student.management.resource;
 
-import com.example.student.management.service.CoursesServiceImpl;
+import com.example.student.management.service.CourseService;
 import com.example.student.management.dto.CoursesDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,8 +11,10 @@ import java.util.List;
 @org.springframework.web.bind.annotation.RestController //@RestController neden çalışmıyor?
 @RequestMapping(path="api/courses")
 public class CourseController {
+
+    @Qualifier("CourseCacheServiceImplComposition")
     @Autowired
-    private CoursesServiceImpl coursesService;
+    private CourseService coursesService;
 
     @GetMapping
     public List<CoursesDTO> getCourses(){
@@ -20,7 +23,10 @@ public class CourseController {
     @GetMapping(path = "/count")
     public long getCount(){return coursesService.getCount();}
     @PostMapping
-    public  void saveCourse(@RequestBody CoursesDTO courseDto) {
+    public  void saveCourse(@RequestParam String name,
+                            @RequestParam Integer capacity,
+                            @RequestParam String teacher) {
+        var courseDto = new CoursesDTO(name, capacity, teacher);
         coursesService.saveCourse(courseDto);
     }
     @DeleteMapping(path = "/delete/{id}")

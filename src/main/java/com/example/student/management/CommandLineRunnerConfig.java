@@ -1,4 +1,10 @@
+/*
+*  Use this configuration file when you need to add students each time you restart the application
+*  if spring.jpa.hibernate.ddl-auto=create-drop
+ */
 
+
+/*
 package com.example.student.management;
 
 import com.example.student.management.persistence.entity.Student;
@@ -9,6 +15,7 @@ import org.springframework.context.annotation.Configuration;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Random;
 
 import static java.time.Month.*;
 
@@ -17,6 +24,7 @@ public class CommandLineRunnerConfig {
     @Bean
     CommandLineRunner commandLineRunner(StudentRepo studentRepository){
         return args -> {
+
             Student emre = new Student(
                     "emre",
                     "emre@mail.com",
@@ -35,3 +43,5 @@ public class CommandLineRunnerConfig {
         };
     }
 }
+*/
+

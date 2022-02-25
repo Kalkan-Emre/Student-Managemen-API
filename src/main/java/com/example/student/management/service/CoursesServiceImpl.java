@@ -3,45 +3,36 @@ package com.example.student.management.service;
 import com.example.student.management.dto.CoursesDTO;
 import com.example.student.management.mapper.Mapper;
 import com.example.student.management.persistence.entity.Course;
-import com.example.student.management.persistence.repository.CoursesRepository;
-import com.example.student.management.persistence.repository.StudentRepo;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.Cacheable;
+import com.example.student.management.persistence.repository.CourseRepository;
+import com.example.student.management.persistence.repository.StudentRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
-@CacheConfig(cacheNames = "courses")
+@Service("CourseService")
+@RequiredArgsConstructor
 public class CoursesServiceImpl implements CourseService{
 
-    private final CoursesRepository coursesRepository;
-    private final StudentRepo studentRepository;
+    private final CourseRepository coursesRepository;
+    private final StudentRepository studentRepository;
     private final Mapper mapper;
 
-
-    public CoursesServiceImpl(CoursesRepository coursesRepository, StudentRepo studentRepository, Mapper mapper) {
-        this.coursesRepository = coursesRepository;
-        this.studentRepository = studentRepository;
-        this.mapper = mapper;
-    }
-
     @Override
-    @Cacheable("students")
     public List<CoursesDTO> getCourses() {
         return coursesRepository.findAll().stream().map(mapper::mapEntityToDto).collect(Collectors.toList());
     }
 
     @Override
     public void saveCourse(CoursesDTO courseDto) {
+
         coursesRepository.save(mapper.mapDtoToEntity(courseDto));
     }
 
     @Override
     public void deleteCourse(Long id) {
-        System.out.println(id);
         boolean exists = coursesRepository.existsById(id);
         if(!exists){
             throw new IllegalStateException("Student with id " +id +" does not exists");

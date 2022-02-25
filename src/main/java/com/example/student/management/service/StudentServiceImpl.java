@@ -3,31 +3,26 @@ package com.example.student.management.service;
 import com.example.student.management.dto.StudentsDTO;
 import com.example.student.management.mapper.Mapper;
 import com.example.student.management.persistence.entity.Student;
-import com.example.student.management.persistence.repository.StudentRepo;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.Cacheable;
+import com.example.student.management.persistence.repository.CourseRepository;
+import com.example.student.management.persistence.repository.StudentRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Service
-@CacheConfig(cacheNames = "students")
+@Service("studentService")
+@RequiredArgsConstructor
 public class StudentServiceImpl implements StudentService{
 
-    private final StudentRepo studentRepository;
+    private final StudentRepository studentRepository;
+    private final CourseRepository courseRepository;
     private final Mapper mapper;
 
-    public StudentServiceImpl(StudentRepo studentRepository, Mapper mapper) {
-        this.studentRepository = studentRepository;
-        this.mapper = mapper;
-    }
-
     @Override
-    @Cacheable("students")
     public List<StudentsDTO> getStudents() {
         return studentRepository.findAll().stream().map(mapper::mapEntityToDto).collect(Collectors.toList());
     }
@@ -54,9 +49,13 @@ public class StudentServiceImpl implements StudentService{
     public void delete(Long idOfStudentToBeDelete){
         boolean exists = studentRepository.existsById(idOfStudentToBeDelete);
         if(!exists){
-            throw new IllegalStateException("Student with id "+idOfStudentToBeDelete+"does not exists");
+            throw new IllegalStateException("Student with id "+idOfStudentToBeDelete+" does not exists");
         }
         else{
+            var student = studentRepository.findById(idOfStudentToBeDelete);
+            courseRepository.findAll().stream().forEach(
+                    course -> course.getEnrolledStudents().remove(student)
+            );
             studentRepository.deleteById(idOfStudentToBeDelete);
         }
     }
@@ -83,8 +82,13 @@ public class StudentServiceImpl implements StudentService{
 
     @Override
     public List<Long> getNotEnrolledToAnyCourse() {
-        return studentRepository.findAll().stream().filter(student -> !student.getCourses()
-                .stream().map(course -> new ArrayList<>(course.getEnrolledStudents()).contains(student)).collect(Collectors.toList())
-                .contains(true)).map(Student::getId).collect(Collectors.toList());
+        var students = studentRepository.findAll();
+        if (students == null || students.isEmpty()){
+            return Collections.emptyList();
+        }
+        return students.stream()
+                .filter(student -> student.getCourses()
+                    .stream().noneMatch(course -> course.getEnrolledStudents().contains(student)))
+                .map(Student::getId).collect(Collectors.toList());
     }
 }

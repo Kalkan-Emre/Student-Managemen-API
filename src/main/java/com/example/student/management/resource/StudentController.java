@@ -1,19 +1,19 @@
 package com.example.student.management.resource;
 
 import com.example.student.management.dto.StudentsDTO;
-import com.example.student.management.service.StudentServiceImpl;
+import com.example.student.management.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
-
-
 import java.util.List;
 
 @RestController
 @RequestMapping(path="api/v1/student")
 public class StudentController {
 
+    @Qualifier("studentCacheCompositionService")
     @Autowired
-    private StudentServiceImpl studentService;
+    private StudentService studentService;
 
     @GetMapping
     public List<StudentsDTO> getStudents(){
@@ -26,8 +26,8 @@ public class StudentController {
     }
 
     @PostMapping(path = "/add")
-    public void add(@RequestBody StudentsDTO studentToBeAdd){
-        studentService.add(studentToBeAdd);
+    public void add(@RequestBody StudentsDTO student){
+        studentService.add(student);
     }
 
     @DeleteMapping(path="/delete/{id}")
